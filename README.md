@@ -12,13 +12,13 @@ zip -r ../dist.zip .
 cd ..
 ```
 2.2 Deploy  
-`az webapp deploy --resource-group comptrollerapiresourcegroup --name comptroller --src-path ./dist.zip --type zip`
+`az webapp deploy --resource-group ComptrollerApiResourceGroup --name comptroller --src-path ./dist.zip --type zip`
 3. (Option 2) Deploy using git 
 ```
-git remote set-url azure https://<username>:<password>@YourWebAppName.scm.azurewebsites.net/YourWebAppName.git
+git remote add azure https://comptroller.scm.azurewebsites.net:443/comptroller.git
 git add .
 git commit -m "your comment"
-git push azure main:master 
+git push azure main:master (you will need to put username and password from Azure App Service Delpoyment Center)
 ```
 
 ## Testing 
