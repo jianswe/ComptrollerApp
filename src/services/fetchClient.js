@@ -1,4 +1,4 @@
-export const baseUrl = import.meta.env.VITE_COMPTROLLER_API_URL 
+export const baseUrl = import.meta.env.VITE_COMPTROLLER_API_URL ?? "https://comptrollerapi.azurewebsites.net"
 
 export const fetchClient = async (apiUrl, httpMethod = 'GET', dataToSend = '') => {
     const token = localStorage.getItem('userToken'); // Retrieve token from localStorage
