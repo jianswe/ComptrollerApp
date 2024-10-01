@@ -52,7 +52,7 @@ const ComptrollerData = () => {
       setIsEditing(false);
       setFormData({
         taxId: '',
-        category: '',
+        category: 'Income Tax', // set default, otherwise will be null if not changed during creation. 
         revenue: 0,
         taxAmount: 0,
         submittedDate: '',
