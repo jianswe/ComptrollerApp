@@ -26,5 +26,14 @@ export const fetchClient = async (apiUrl, httpMethod = 'GET', dataToSend = '') =
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    return response.json(); // Parse the JSON response
+    // Check if the response body is not empty
+    const text = await response.text(); // Get the raw response text
+
+    if (!text) {
+      return null;
+    }
+
+    // Now parse the JSON safely
+    const data = JSON.parse(text);
+    return data;
 }
