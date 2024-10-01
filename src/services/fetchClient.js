@@ -15,25 +15,27 @@ export const fetchClient = async (apiUrl, httpMethod = 'GET', dataToSend = '') =
     if (httpMethod === 'POST' || httpMethod === 'PUT') {
       request.body = JSON.stringify(dataToSend)
     }
+    
     const response = await fetch(apiUrl, request);
+    const contentType = response.headers.get('Content-Type');
 
-    // Check for 401 or other errors but don't handle it here
+    let data = null;
+    if (contentType && contentType.includes('application/json')) {
+      data = await response.json();
+    } else {
+      data = await response.text();
+    }
+
+    // If response is not ok, throw an error with status and response data
     if (!response.ok) {
-      if (response.status === 401) {
-        // Let the caller handle token expiration or unauthorized access
-        console.error('Token expired or unauthorized.');
-      }
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const error = new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+      error.response = {
+        status: response.status,
+        statusText: response.statusText,
+        body: data, // Attach the response body to the error
+      };
+      throw error;
     }
 
-    // Check if the response body is not empty
-    const text = await response.text(); // Get the raw response text
-
-    if (!text) {
-      return null;
-    }
-
-    // Now parse the JSON safely
-    const data = JSON.parse(text);
     return data;
 }

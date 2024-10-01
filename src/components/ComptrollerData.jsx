@@ -174,13 +174,11 @@ const ComptrollerData = () => {
           </label>
           <label>
             Category:
-            <input
-              type="text"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required
-            />
+            <select name="category" value={formData.category} onChange={handleChange} required>
+              <option value="Income Tax">Income Tax</option>
+              <option value="Property Tax">Property Tax</option>
+              <option value="Sales Tax">Sales Tax</option>
+            </select>
           </label>
           <label>
             Revenue:

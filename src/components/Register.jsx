@@ -1,8 +1,10 @@
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { register } from '../services/authService';
 
 const Register = () => {
+    const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -18,10 +20,13 @@ const Register = () => {
             try {
                 /* const response = */ await register(values);
                 setStatus({success: 'Registration successful! Please Login'});
+                setTimeout(() => {
+                    navigate('/login');
+                }, 3000)
             } catch (error) {
-                if (error.response && error.response.data) {
-                    console.log('error.response.data', error.response.data)
-                    setStatus({ errors: error.response.data});
+                if (error.response && error.response.body) {
+                    console.log('error.response.body', error.response.body)
+                    setStatus({ errors: error.response.body});
                 } else {
                     console.error('Unexpected error:', error);
                 }
